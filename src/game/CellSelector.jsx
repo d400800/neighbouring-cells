@@ -9,6 +9,12 @@ const useStyles = makeStyles(theme => ({
         cursor: 'pointer',
         width: 30,
         height: 30
+    },
+    root: {
+        display: 'flex',
+        [theme.breakpoints.down('sm')]: {
+            justifyContent: 'space-between'
+        },
     }
 }));
 
@@ -31,7 +37,7 @@ export default function CellSelector({onColorSelect}) {
     }, [cells, onColorSelectRef])
 
     return (
-        <Box display={'flex'}>
+        <Box className={classes.root}>
             {cells.map(cell => (
                 <button title={cell} key={cell}
                         onClick={() => onColorSelect(cell)}
