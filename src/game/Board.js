@@ -4,6 +4,8 @@ import {colors} from '../config.js';
 class Board {
     constructor(options) {
         this.cellColors = options.colors;
+
+        this.processedCells = new Set(['0|0']);
     }
 
     generateRandomBoard(size) {
@@ -23,29 +25,43 @@ class Board {
     }
 
     repaint(color, originalBoard) {
+        console.time('findCellsToRepaint');
+
+        const visitedCells = new Set(['0|0']);
         const board = originalBoard.slice();
 
-        const visitedCells = ['0|0'];
-
         const initialColor = board[0][0];
-
-        let currentCell = [0,0];
+        const initialCell = [0,0];
 
         const findCellsToRepaint = (startCell) => {
-            let neighbours = this.getNeighbours(board.length-1, board, initialColor, startCell, visitedCells);
+            let neighbours = this.getSameNeighbours(board, initialColor, startCell, visitedCells);
 
             if (neighbours.length > 0) {
                 for (const cell of neighbours) {
-                    visitedCells.push(this.cellToString(cell));
+                    visitedCells.add(this.cellToString(cell));
+
+                    this.processedCells.add(this.cellToString(cell));
 
                     findCellsToRepaint(cell);
                 }
             }
 
-            return this.cellStringsToArr(visitedCells);
+
+            console.log('visitedCells', visitedCells.size);
+            return this.cellStringsToArr(Array.from(visitedCells.values()));
         }
 
-        const cellsToRepaint = findCellsToRepaint(currentCell);
+        // START
+        console.log(this.processedCells);
+        const recentProcessedCell = this.cellStringsToArr(
+            [Array.from(this.processedCells).pop()]
+        )[0];
+
+        console.log(recentProcessedCell);
+
+        const cellsToRepaint = findCellsToRepaint(recentProcessedCell);
+
+        console.timeEnd('findCellsToRepaint');
 
         for (const [row, col] of cellsToRepaint) {
             board[row][col] = color;
@@ -67,26 +83,31 @@ class Board {
             });
     }
 
-    getNeighbours(size, board, color, [row, col], visitedCells) {
+    getSameNeighbours(board, color, [row, col], visitedCells) {
+        const size = board.length - 1;
+
         const right = row < size ? [row+1, col] : [];
         const left = row !== 0 ? [row-1, col] : [];
         const top = col !== 0 ? [row, col-1] : [];
         const bottom = col < size ? [row, col+1] : [];
 
+        // TODO: optimize
         return [right, left, top, bottom]
             .filter(cell => {
                 return cell.length > 0 &&
                     board[cell[0]][cell[1]] === color &&
-                    !visitedCells.includes(this.cellToString(cell))
+                    !visitedCells.has(this.cellToString(cell))
             });
     }
 
     isHomogeneous(board) {
         const initialCell = board[0][0];
 
-        return board
+        const result = board
             .filter(row => row.filter(cell => !(cell === initialCell)).length > 0)
             .length === 0
+
+        return result;
     }
 }
 
