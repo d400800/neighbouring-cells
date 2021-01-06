@@ -10,12 +10,12 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
     controls: {
-        [theme.breakpoints.down('sm')]: {
-            position: 'fixed',
-            left: theme.spacing(2),
-            right: theme.spacing(2),
-            bottom: theme.spacing(2)
-        },
+        // [theme.breakpoints.down('sm')]: {
+        //     position: 'fixed',
+        //     left: theme.spacing(2),
+        //     right: theme.spacing(2),
+        //     bottom: theme.spacing(2)
+        // },
     }
 }));
 
@@ -53,11 +53,13 @@ export default function Game({size, maxRounds}) {
     useEffect(() => {
         const $gameControls = document.getElementById(gameControlsId);
 
+        setBoardData(board.generateRandomBoard(size));
+
         setGameControlsHeight($gameControls && $gameControls.offsetHeight);
-    }, []);
+    }, [size]);
 
     return (
-        <Box>
+        <Box width="100%">
             <Box>
                 <GameBoard
                     size={size}
@@ -67,17 +69,17 @@ export default function Game({size, maxRounds}) {
                 />
             </Box>
 
-            <Box id={gameControlsId} mt={3} className={classes.controls}>
-                <Box>
+            <Box id={gameControlsId} mt={2} className={classes.controls}>
+                <Box textAlign="center">
+                    <Typography variant={"body1"}>Round {round}/{maxRounds}</Typography>
+                </Box>
+
+                <Box my={4}>
                     <CellSelector onColorSelect={selectNextColor}/>
                 </Box>
 
-                <Box mt={3} display={"flex"} alignItems={"center"}>
-                    <Box mr={3}>
-                        <Typography variant={"body1"}>Round {round}/{maxRounds}</Typography>
-                    </Box>
-
-                    <Button variant={"contained"} size={"small"} onClick={restartGame}>
+                <Box mt={3} textAlign="center">
+                    <Button variant={"contained"} onClick={restartGame}>
                         Restart
                     </Button>
                 </Box>

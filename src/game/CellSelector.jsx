@@ -7,13 +7,13 @@ const useStyles = makeStyles(theme => ({
     btn: {
         border: 'none',
         cursor: 'pointer',
-        width: 30,
-        height: 30
+        width: 24,
+        height: 24
     },
     root: {
         display: 'flex',
         [theme.breakpoints.down('sm')]: {
-            justifyContent: 'space-between'
+            justifyContent: 'space-around'
         },
     }
 }));

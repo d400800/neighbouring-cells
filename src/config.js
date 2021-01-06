@@ -12,3 +12,10 @@ export const gameDescription = `
     At the beginning of each round, the color of the top left (initial) cell is selected.
     The newly selected color will spread to other cells which have the same color as the initial one and are adjacent to each other (have a common top, right, bottom or left border). 
 `;
+
+export const title = 'Neighbouring Cells';
+
+export const standardGame = {
+    rounds: 21,
+    size: 18
+}

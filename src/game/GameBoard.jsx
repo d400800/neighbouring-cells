@@ -7,7 +7,8 @@ import {colorMap} from '../config.js';
 
 export const useCellStyles = makeStyles(theme => ({
     cell: {
-        width: props => props.width,
+        // width: props => props.width,
+        width: '100%',
         margin: 1,
         transition: 'background-color .25s',
 
@@ -20,8 +21,8 @@ export const useCellStyles = makeStyles(theme => ({
 }));
 
 export default function GameBoard({boardData, onColorSelect, size, gameControlsHeight}) {
-    const cellWidth = (window.innerHeight - gameControlsHeight - 100) / size;
-    const classes = useCellStyles({width: cellWidth});
+    const cellWidth = (window.innerHeight - gameControlsHeight - 300) / size;
+    const classes = useCellStyles({size: size});
 
     return (
         <>
