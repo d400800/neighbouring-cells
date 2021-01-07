@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
     },
     root: {
         display: 'flex',
-        [theme.breakpoints.down('sm')]: {
+        justifyContent: 'center',
+        [theme.breakpoints.down('xs')]: {
             justifyContent: 'space-around'
         },
     }

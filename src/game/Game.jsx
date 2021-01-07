@@ -9,13 +9,10 @@ import GameDialog from "./Dialog";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-    controls: {
-        // [theme.breakpoints.down('sm')]: {
-        //     position: 'fixed',
-        //     left: theme.spacing(2),
-        //     right: theme.spacing(2),
-        //     bottom: theme.spacing(2)
-        // },
+    board: {
+        [theme.breakpoints.up('sm')]: {
+            display: 'inline-block'
+        },
     }
 }));
 
@@ -59,8 +56,8 @@ export default function Game({size, maxRounds}) {
     }, [size]);
 
     return (
-        <Box width="100%">
-            <Box>
+        <Box width="100%" textAlign="center">
+            <Box className={classes.board}>
                 <GameBoard
                     size={size}
                     boardData={boardData}
