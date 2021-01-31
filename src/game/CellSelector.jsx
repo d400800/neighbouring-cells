@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import {colorMap, colors} from '../config.js';
+import {defaultColorMap} from '../config.js';
 
 const useStyles = makeStyles(theme => ({
     btn: {
@@ -19,21 +19,33 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function CellSelector({onColorSelect}) {
+export default function CellSelector({onColorSelect, colorMap=defaultColorMap}) {
     const onColorSelectRef = useRef(onColorSelect).current;
     const classes = useStyles();
 
-    const cells = colors;
+    const cells = Array.from(colorMap.keys());
 
     useEffect(() => {
-        document.addEventListener('keydown', function (e) {
+        function handleKeydown(e) {
+            if (e.code.indexOf('Digit') < 0) {
+                return;
+            }
+
             const cellIndex = parseInt(e.code.split('Digit')[1]);
 
-            onColorSelectRef(cells[cellIndex-1]);
-        });
+            if (cellIndex > 4) {
+                return;
+            }
 
-        return () => {                                                               // second, we return an anonymous clean up function
+            onColorSelectRef(cells[cellIndex-1]);
+        }
+
+        document.addEventListener('keydown', handleKeydown);
+
+        return () => { // second, we return an anonymous clean up function
             console.log('I clean now...');
+
+            document.removeEventListener('keydown', handleKeydown);
         };
     }, [cells, onColorSelectRef])
 

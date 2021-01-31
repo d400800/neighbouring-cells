@@ -3,7 +3,7 @@ import React from "react";
 import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
-import {colorMap} from '../config.js';
+import {defaultColorMap} from '../config.js';
 
 export const useCellStyles = makeStyles(theme => ({
     cell: {
@@ -23,8 +23,9 @@ export const useCellStyles = makeStyles(theme => ({
     }
 }));
 
-export default function GameBoard({boardData, onColorSelect, size, gameControlsHeight}) {
-    const cellWidth = (window.innerHeight - gameControlsHeight - 240) / size;
+export default function GameBoard({boardData, onColorSelect, size, gameControlsHeight, colorMap=defaultColorMap}) {
+    const cellWidth = (window.innerHeight - (gameControlsHeight || 0) - 240) / size;
+
     const classes = useCellStyles({size, cellWidth});
 
     return (

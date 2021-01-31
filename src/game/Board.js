@@ -3,17 +3,19 @@ import {colors} from '../config.js';
 
 class Board {
     constructor(options) {
-        this.cellColors = options.colors;
+        this.defaultCellColors = options.colors;
     }
 
-    generateRandomBoard(size) {
+    generateRandomBoard(size, colorMap) {
+        const cellColors = Array.from(colorMap.keys());
+
         let board = [];
 
         for (let i = 0; i < size; ++i) {
             let row = [];
 
             for (let j = 0; j < size; ++j) {
-                row.push(Utils.getRandomItem(this.cellColors));
+                row.push(Utils.getRandomItem(cellColors || this.defaultCellColors));
             }
 
             board.push(row);
@@ -22,6 +24,7 @@ class Board {
         return board;
     }
 
+    // bootleg bucket fill algorithm, don't judge
     repaint(color, originalBoard) {
         const board = originalBoard.slice();
 

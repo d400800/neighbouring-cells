@@ -16,10 +16,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Game({size, maxRounds}) {
+export default function Game({size, rounds, colorMap}) {
     const classes = useStyles();
 
-    const [boardData, setBoardData] = useState(board.generateRandomBoard(size));
+    const [boardData, setBoardData] = useState(board.generateRandomBoard(size, colorMap));
     const [round, setRound] = useState(1);
     const [victory, setVictory] = useState(false);
     const [gameControlsHeight, setGameControlsHeight] = useState();
@@ -38,7 +38,7 @@ export default function Game({size, maxRounds}) {
     function restartGame() {
         setRound(1);
         setVictory(false);
-        setBoardData(board.generateRandomBoard(size));
+        setBoardData(board.generateRandomBoard(size, colorMap));
     }
 
     function winGame() {
@@ -50,7 +50,7 @@ export default function Game({size, maxRounds}) {
     useEffect(() => {
         const $gameControls = document.getElementById(gameControlsId);
 
-        setBoardData(board.generateRandomBoard(size));
+        setBoardData(board.generateRandomBoard(size, colorMap));
 
         setGameControlsHeight($gameControls && $gameControls.offsetHeight);
     }, [size]);
@@ -61,6 +61,7 @@ export default function Game({size, maxRounds}) {
                 <GameBoard
                     size={size}
                     boardData={boardData}
+                    colorMap={colorMap}
                     gameControlsHeight={gameControlsHeight}
                     onColorSelect={selectNextColor}
                 />
@@ -68,11 +69,11 @@ export default function Game({size, maxRounds}) {
 
             <Box id={gameControlsId} mt={2} className={classes.controls}>
                 <Box textAlign="center">
-                    <Typography variant={"body1"}>Round {round}/{maxRounds}</Typography>
+                    <Typography variant={"body1"}>Round {round}/{rounds}</Typography>
                 </Box>
 
                 <Box my={4}>
-                    <CellSelector onColorSelect={selectNextColor}/>
+                    <CellSelector onColorSelect={selectNextColor} colorMap={colorMap}/>
                 </Box>
 
                 <Box mt={3} textAlign="center">
@@ -82,9 +83,19 @@ export default function Game({size, maxRounds}) {
                 </Box>
             </Box>
 
-            <GameDialog text={"You lost"} action={restartGame} open={round > maxRounds}/>
+            <GameDialog
+                title={"The game beat you"}
+                text={'Want a revenge?'}
+                action={restartGame}
+                open={round > rounds}
+            />
 
-            <GameDialog text={"Congratulations! You won!"} action={restartGame} open={victory}/>
+            <GameDialog
+                title={"Congratulations!"}
+                text={'You beat the game'}
+                action={restartGame}
+                open={victory}
+            />
         </Box>
     );
 }

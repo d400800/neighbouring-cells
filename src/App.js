@@ -1,15 +1,22 @@
 import './App.css';
 import React from 'react';
-import {Box, Tab, Tabs} from "@material-ui/core";
-import {standardGame} from "./config";
+import {Box} from "@material-ui/core";
+import {standardGame, colorMaps} from "./config";
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Setup from "./game/Setup";
+import Settings from "./game/Settings";
 import Topbar from "./game/Topbar";
 import Game from "./game/Game";
+import {TabNavigation} from "./game/TabNavigation";
 
 function App() {
-    const [page, setPage] = React.useState(0);
+    const [tab, setTab] = React.useState(0);
+
+    const [settings, setSettings] = React.useState({
+        size: standardGame.size,
+        theme: standardGame.theme,
+        rounds: standardGame.rounds
+    });
 
     return (
         <main>
@@ -20,50 +27,27 @@ function App() {
                     <Topbar/>
                 </Box>
 
-                <TabNavigation setPage={setPage}/>
+                <TabNavigation setTab={setTab} tab={tab}/>
 
-                {page === 0 ?
+                {tab === 0 ?
                     <Box display="flex" justifyContent="center" py={3}>
-                        <Game size={standardGame.size} maxRounds={standardGame.rounds}/>
+                        <Game
+                            size={settings.size}
+                            rounds={settings.rounds}
+                            colorMap={colorMaps.get(settings.theme)}
+                        />
                     </Box>
                     :
-                    <Box display="flex" justifyContent="center" py={3}>
-                        <Game size={4} maxRounds={standardGame.rounds}/>
+                    <Box py={3}>
+                        <Settings
+                            settings={settings}
+                            setSettings={setSettings}
+                            setTab={setTab}
+                        />
                     </Box>
                 }
             </Box>
         </main>
-    );
-}
-
-function TabNavigation({setPage}) {
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-        setPage(newValue);
-    };
-
-    function a11yProps(index) {
-        return {
-            id: `full-width-tab-${index}`,
-            'aria-controls': `full-width-tabpanel-${index}`,
-        };
-    }
-
-    return (
-        <Box>
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                variant="fullWidth"
-                textColor="primary"
-                indicatorColor="primary"
-            >
-                <Tab label="Standard Game" {...a11yProps(0)} />
-                <Tab label="CUstom Game" {...a11yProps(1)} disabled/>
-            </Tabs>
-        </Box>
     );
 }
 
