@@ -1,6 +1,8 @@
 import React, {useEffect, useRef} from 'react';
+
 import {Box} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+
 import {defaultColorMap} from '../config.js';
 
 const useStyles = makeStyles(theme => ({
@@ -15,7 +17,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         [theme.breakpoints.down('xs')]: {
             justifyContent: 'space-around'
-        },
+        }
     }
 }));
 
@@ -37,7 +39,7 @@ export default function CellSelector({onColorSelect, colorMap=defaultColorMap}) 
                 return;
             }
 
-            onColorSelectRef(cells[cellIndex-1]);
+            onColorSelectRef(cells[cellIndex - 1]);
         }
 
         document.addEventListener('keydown', handleKeydown);
@@ -47,7 +49,7 @@ export default function CellSelector({onColorSelect, colorMap=defaultColorMap}) 
 
             document.removeEventListener('keydown', handleKeydown);
         };
-    }, [cells, onColorSelectRef])
+    }, [cells, onColorSelectRef]);
 
     return (
         <Box className={classes.root}>

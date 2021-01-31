@@ -1,15 +1,17 @@
 import React, {useState} from "react";
+
 import {Box, Typography, IconButton, DialogTitle, DialogActions, DialogContent} from "@material-ui/core";
-import {title, gameDescription} from "../config";
-import InfoIcon from '@material-ui/icons/Info';
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import {makeStyles} from "@material-ui/core/styles";
+import InfoIcon from '@material-ui/icons/Info';
+
+import {title, gameDescription} from "../config";
 
 const useStyles = makeStyles(theme => ({
     tooltipIcon: {
         top: '50%',
-        left: '100%',
+        right: '0',
         position: 'absolute',
         transform: 'translateY(-50%)'
     }
@@ -22,8 +24,8 @@ export default function Topbar() {
 
     return (
         <Box textAlign="center">
-            <Box display="flex" justifyContent="center" alignItems="center">
-                <Box position="relative">
+            <Box position="relative" display="flex" justifyContent="center" alignItems="center">
+                <Box>
                     <Typography variant={"h5"}>{title}</Typography>
 
                     <Box className={classes.tooltipIcon}>

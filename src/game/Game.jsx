@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from 'react';
+
 import {Box, Typography, Button} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
 import board from "./Board";
-
-import GameBoard from "./GameBoard";
 import CellSelector from "./CellSelector";
 import GameDialog from "./Dialog";
-import {makeStyles} from "@material-ui/core/styles";
+import GameBoard from "./GameBoard";
 
 const useStyles = makeStyles(theme => ({
     board: {
         [theme.breakpoints.up('sm')]: {
             display: 'inline-block'
-        },
+        }
     }
 }));
 
@@ -60,10 +60,10 @@ export default function Game({size, rounds, colorMap}) {
             <Box className={classes.board}>
                 <GameBoard
                     size={size}
-                    boardData={boardData}
                     colorMap={colorMap}
-                    gameControlsHeight={gameControlsHeight}
+                    boardData={boardData}
                     onColorSelect={selectNextColor}
+                    gameControlsHeight={gameControlsHeight}
                 />
             </Box>
 
@@ -99,4 +99,3 @@ export default function Game({size, rounds, colorMap}) {
         </Box>
     );
 }
-

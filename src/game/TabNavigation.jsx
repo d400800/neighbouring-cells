@@ -1,4 +1,5 @@
 import React from "react";
+
 import {Box, Tab, Tabs} from "@material-ui/core";
 
 export function TabNavigation({setTab, tab}) {
@@ -12,12 +13,12 @@ export function TabNavigation({setTab, tab}) {
     function a11yProps(index) {
         return {
             id: `full-width-tab-${index}`,
-            'aria-controls': `full-width-tabpanel-${index}`,
+            'aria-controls': `full-width-tabpanel-${index}`
         };
     }
 
     React.useEffect(() => {
-        setValue(tab)
+        setValue(tab);
     }, [tab]);
 
     return (

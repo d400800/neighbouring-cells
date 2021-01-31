@@ -1,23 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
+
 import {TextField, Box, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, Button} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
 
-import {colorMaps} from "../config";
-
-const useStyles = makeStyles(theme => ({
-
-}));
+import {colorMaps, sizes} from "../config";
 
 export default function Settings({settings, setSettings, setTab}) {
-    const classes = useStyles();
-
-    const [boardSize, setBoardSize] = React.useState(settings.size);
-    const [rounds, setRounds] = React.useState(settings.rounds);
-    const [theme, setTheme] = React.useState(settings.theme);
+    const [size, setSize] = useState(settings.size);
+    const [rounds, setRounds] = useState(settings.rounds);
+    const [theme, setTheme] = useState(settings.theme);
 
     function onSetSettings() {
         const newSettings = {
-            size: boardSize,
+            size,
             rounds,
             theme
         };
@@ -27,17 +21,18 @@ export default function Settings({settings, setSettings, setTab}) {
     }
 
     return (
-        <Box className={classes.root}>
+        <Box>
             <form>
                 <FormControl component="fieldset" fullWidth>
                     <FormLabel component="legend">Board size</FormLabel>
 
-                    <RadioGroup aria-label="board-size" name="board-size" value={boardSize}
-                                onChange={e => setBoardSize(parseInt(e.target.value))}
+                    <RadioGroup aria-label="board-size" name="board-size"
+                                value={size}
+                                onChange={e => setSize(parseInt(e.target.value))}
                     >
-                        <FormControlLabel value={18} control={<Radio />} label="18" />
-                        <FormControlLabel value={24} control={<Radio />} label="24" />
-                        <FormControlLabel value={32} control={<Radio />} label="32" />
+                        {sizes.map(size => (
+                            <FormControlLabel key={size} value={size} control={<Radio />} label={`${size}`} />
+                        ))}
                     </RadioGroup>
                 </FormControl>
 
@@ -49,7 +44,7 @@ export default function Settings({settings, setSettings, setTab}) {
                                     onChange={e => setTheme(e.target.value)}
                         >
                             {Array.from(colorMaps.keys()).map((theme) => (
-                               <FormControlLabel key={theme} value={theme} control={<Radio />} label={theme} />
+                                <FormControlLabel key={theme} value={theme} control={<Radio />} label={theme} />
                             ))}
                         </RadioGroup>
                     </FormControl>

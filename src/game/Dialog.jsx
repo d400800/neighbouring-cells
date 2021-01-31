@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 
 import {Box, Typography, Dialog, DialogActions, DialogTitle, DialogContent} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
         '& .MuiDialog-paperWidthFalse': {
             width: "80%"
         }
-    },
+    }
 }));
 
 export default function GameDialog({text, title, open, action}) {

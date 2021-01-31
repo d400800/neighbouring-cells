@@ -12,7 +12,7 @@ export const useCellStyles = makeStyles(theme => ({
         transition: 'background-color .25s',
 
         [theme.breakpoints.up('sm')]: {
-            width: props => props.cellWidth,
+            width: props => props.cellWidth
         },
 
         '&:after': {

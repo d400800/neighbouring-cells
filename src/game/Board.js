@@ -1,5 +1,5 @@
-import Utils from './utils';
 import {colors} from '../config.js';
+import Utils from './utils';
 
 class Board {
     constructor(options) {
@@ -46,7 +46,7 @@ class Board {
             }
 
             return this.cellStringsToArr(visitedCells);
-        }
+        };
 
         const cellsToRepaint = findCellsToRepaint(currentCell);
 
@@ -77,11 +77,9 @@ class Board {
         const bottom = col < size ? [row, col+1] : [];
 
         return [right, left, top, bottom]
-            .filter(cell => {
-                return cell.length > 0 &&
+            .filter(cell => cell.length > 0 &&
                     board[cell[0]][cell[1]] === color &&
-                    !visitedCells.includes(this.cellToString(cell))
-            });
+                    !visitedCells.includes(this.cellToString(cell)));
     }
 
     isHomogeneous(board) {
@@ -89,7 +87,7 @@ class Board {
 
         return board
             .filter(row => row.filter(cell => !(cell === initialCell)).length > 0)
-            .length === 0
+            .length === 0;
     }
 }
 
