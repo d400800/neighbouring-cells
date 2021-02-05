@@ -28,7 +28,7 @@ class Board {
     repaint(color, originalBoard) {
         const board = originalBoard.slice();
 
-        const visitedCells = ['0|0'];
+        const visitedCells = new Set(['0|0']);
 
         const initialColor = board[0][0];
 
@@ -39,7 +39,7 @@ class Board {
 
             if (neighbours.length > 0) {
                 for (const cell of neighbours) {
-                    visitedCells.push(this.cellToString(cell));
+                    visitedCells.add(this.cellToString(cell));
 
                     findCellsToRepaint(cell);
                 }
@@ -66,7 +66,7 @@ class Board {
     }
 
     cellStringsToArr(cellStrings) {
-        return cellStrings
+        return Array.from(cellStrings.values())
             .map(str => {
                 const [row, col] = str.split('|');
 
@@ -82,8 +82,9 @@ class Board {
 
         return [right, left, top, bottom]
             .filter(cell => cell.length > 0 &&
-                    board[cell[0]][cell[1]] === color &&
-                    !visitedCells.includes(this.cellToString(cell)));
+                board[cell[0]][cell[1]] === color &&
+                !visitedCells.has(this.cellToString(cell))
+            );
     }
 
     isHomogeneous(board) {
