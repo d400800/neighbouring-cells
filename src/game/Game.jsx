@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {Box, Typography, Button} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
-import board from "./Board";
+import board from "../board/Board";
 import CellSelector from "./CellSelector";
 import GameDialog from "./Dialog";
 import GameBoard from "./GameBoard";

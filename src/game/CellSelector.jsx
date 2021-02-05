@@ -45,8 +45,6 @@ export default function CellSelector({onColorSelect, colorMap=defaultColorMap}) 
         document.addEventListener('keydown', handleKeydown);
 
         return () => { // second, we return an anonymous clean up function
-            console.log('I clean now...');
-
             document.removeEventListener('keydown', handleKeydown);
         };
     }, [cells, onColorSelectRef]);

@@ -1,5 +1,5 @@
 import {colors} from '../config.js';
-import Utils from './utils';
+import Utils from '../game/utils';
 
 class Board {
     constructor(options) {
@@ -48,7 +48,11 @@ class Board {
             return this.cellStringsToArr(visitedCells);
         };
 
+        console.time('findCellsToRepaint');
+
         const cellsToRepaint = findCellsToRepaint(currentCell);
+
+        console.timeEnd('findCellsToRepaint');
 
         for (const [row, col] of cellsToRepaint) {
             board[row][col] = color;
