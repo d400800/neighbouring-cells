@@ -12,8 +12,8 @@ export function TabNavigation({setTab, tab}) {
 
     function a11yProps(index) {
         return {
-            id: `full-width-tab-${index}`,
-            'aria-controls': `full-width-tabpanel-${index}`
+            id: `tab-${index}`,
+            'aria-controls': `tabpanel-${index}`
         };
     }
 

@@ -53,7 +53,7 @@ export default function Game({size, rounds, colorMap}) {
         setBoardData(board.generateRandomBoard(size, colorMap));
 
         setGameControlsHeight($gameControls && $gameControls.offsetHeight);
-    }, [size]);
+    }, [size, colorMap]);
 
     return (
         <Box width="100%" textAlign="center">

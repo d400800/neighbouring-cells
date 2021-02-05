@@ -4,10 +4,11 @@ import React from 'react';
 import {Box} from "@material-ui/core";
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import {standardGame, colorMaps} from "./config";
+import {colorMaps, standardGame} from "./config";
 import Game from "./game/Game";
 import Settings from "./game/Settings";
 import {TabNavigation} from "./game/TabNavigation";
+import {TabPanel} from "./game/TabPanel";
 import Topbar from "./game/Topbar";
 
 function App() {
@@ -30,23 +31,27 @@ function App() {
 
                 <TabNavigation setTab={setTab} tab={tab}/>
 
-                {tab === 0 ?
-                    <Box id="game-tab-content" display="flex" justifyContent="center" py={3}>
-                        <Game
-                            size={settings.size}
-                            rounds={settings.rounds}
-                            colorMap={colorMaps.get(settings.theme)}
-                        />
-                    </Box>
-                    :
-                    <Box py={3} id="settings-tab-content">
-                        <Settings
-                            settings={settings}
-                            setSettings={setSettings}
-                            setTab={setTab}
-                        />
-                    </Box>
-                }
+                <div>
+                    <TabPanel value={tab} index={0}>
+                        <Box id="game-tab-content" display="flex" justifyContent="center" py={3}>
+                            <Game
+                                size={settings.size}
+                                rounds={settings.rounds}
+                                colorMap={colorMaps.get(settings.theme)}
+                            />
+                        </Box>
+                    </TabPanel>
+
+                    <TabPanel value={tab} index={1}>
+                        <Box id="settings-tab-content" py={3}>
+                            <Settings
+                                settings={settings}
+                                setSettings={setSettings}
+                                setTab={setTab}
+                            />
+                        </Box>
+                    </TabPanel>
+                </div>
             </Box>
         </main>
     );
