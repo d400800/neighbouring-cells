@@ -4,8 +4,6 @@ import Utils from '../game/utils';
 class Board {
     constructor(options) {
         this.defaultCellColors = options.colors;
-
-        this.previousCellsToRepaint = [];
     }
 
     generateRandomBoard(size, colorMap) {
@@ -50,20 +48,13 @@ class Board {
             return visitedCells;
         };
 
-        console.time('findCellsToRepaint');
-
         const cellsToRepaint = findCellsToRepaint(currentCell);
 
-        //console.log('previousCellsToRepaint', this.previousCellsToRepaint);
-        //this.previousCellsToRepaint = cellsToRepaint;
-
-        console.timeEnd('findCellsToRepaint');
-
-        for (const cell of Array.from(cellsToRepaint.values())) {
+        cellsToRepaint.forEach(cell => {
             const [row, col] = cell.split('|');
 
             board[row][col] = color;
-        }
+        });
 
         return board;
     }
